@@ -1,0 +1,16 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<SelectDialog
+		id="selectDialog"
+		title="Client"
+		items="{/client}"
+		search=".onValueHelpSearch"
+		confirm=".onValueHelpClose"
+		cancel=".onValueHelpClose"
+		 >
+		<StandardListItem id="_IDGenStandardListItem1"
+			iconDensityAware="false"
+			iconInset="false"
+			title="{CLIENTKEY}"
+			description="{TITLE}" />
+	</SelectDialog>
+</core:FragmentDefinition>

@@ -1,0 +1,38 @@
+{
+	"nodeBoxWidth": 200,
+	"input": [
+		
+	],
+	"nodes": [
+		
+	],
+	"lines": [
+		
+	],
+	"groups": [
+
+	],
+	"areas":[
+		{
+			"key":1,
+			"text":"ESG Activity"
+		},
+		{
+			"key":2,
+			"text":"Cost for ESG KPI"
+		},
+		{
+			"key":3,
+			"text":"Effects/Impacts"
+		}
+	],
+	"client":[
+		
+	],
+	"final": [
+
+	],
+	"linetmp":[
+		
+	]
+}

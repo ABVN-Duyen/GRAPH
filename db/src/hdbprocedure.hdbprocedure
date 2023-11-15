@@ -1,0 +1,11 @@
+PROCEDURE "hdbprocedure"( )
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+--    DEFAULT SCHEMA <default_schema_name>
+   AS
+BEGIN
+   DELETE FROM db_nodes_view;
+   DELETE FROM db_lines_view;
+   DELETE FROM db_input_view;
+   DELETE FROM db_group_view;
+END

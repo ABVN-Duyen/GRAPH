@@ -1,0 +1,104 @@
+_schema-version: "3.1"
+ID: GRAPH
+description: A simple CAP project.
+version: 1.0.0
+modules:
+- name: GRAPH-srv
+  type: nodejs
+  path: gen/srv
+  requires:
+  - name: GRAPH-db
+  - name: GRAPH-uaa
+  provides:
+  - name: srv-api
+    properties:
+      srv-url: ${default-url}
+  parameters:
+    buildpack: nodejs_buildpack
+  build-parameters:
+    builder: npm-ci
+- name: GRAPH-db-deployer
+  type: hdb
+  path: db
+  requires:
+  - name: GRAPH-db
+    properties:
+      TARGET_CONTAINER: ~{hdi-container-name}
+  - name: cross-container-service-1
+    group: SERVICE_REPLACEMENTS
+    properties:
+      key: ServiceName_1
+      service: ~{the-service-name}
+  parameters:
+    buildpack: nodejs_buildpack
+  build-parameters:
+    ignore:
+    - default-env.json
+    - .env
+- name: GRAPH-app-content
+  type: com.sap.application.content
+  path: .
+  build-parameters:
+    build-result: resources
+    requires:
+    - artifacts:
+      - project1.zip
+      name: project1
+      target-path: resources/
+- name: project1
+  type: html5
+  path: app/project1
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: GRAPH
+  type: approuter.nodejs
+  path: app/
+  requires:
+  - name: srv-api
+    group: destinations
+    properties:
+      forwardAuthToken: true
+      name: srv-api
+      url: ~{srv-url}
+  - name: GRAPH-uaa
+  - name: GRAPH-db
+  parameters:
+    disk-quota: 1024M
+    keep-existing-routes: true
+    memory: 1024M
+resources:
+- name: GRAPH-db
+  type: com.sap.xs.hdi-container
+  parameters:
+    service: hana
+    service-plan: hdi-shared
+  properties:
+    hdi-container-name: ${service-name}
+- name: GRAPH-uaa
+  type: org.cloudfoundry.managed-service
+  parameters:
+    config:
+      role-collections: null
+      tenant-mode: dedicated
+      xsappname: GRAPH-${space}
+    path: ./xs-security.json
+    service: xsuaa
+    service-plan: application
+- name: cross-container-service-1
+  type: org.cloudfoundry.existing-service
+  parameters:
+    service-name: NETWORKGRAPH-hdiGRAPH-db-deployer-ws-m2t5z
+  properties:
+    the-service-name: ${service-name}
+build-parameters:
+  before-all:
+  - builder: custom
+    commands:
+    - npm install --production
+    - npx -p @sap/cds-dk cds build --production
+    - npx rimraf gen/db/src/gen/data

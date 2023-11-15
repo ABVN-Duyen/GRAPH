@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+        <edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml">
+        <edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/>
+    </edmx:Reference>
+    <edmx:DataServices>
+        <Schema Namespace="GraphService" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+            <EntityContainer Name="EntityContainer">
+                <EntitySet Name="NODES_VIEW" EntityType="GraphService.NODES_VIEW"/>
+                <EntitySet Name="LINES_VIEW" EntityType="GraphService.LINES_VIEW"/>
+            </EntityContainer>
+            <EntityType Name="NODES_VIEW">
+                <Property Name="NODEKEY" Type="Edm.String" MaxLength="50"/>
+                <Property Name="NODETITLE" Type="Edm.String" MaxLength="50"/>
+                <Property Name="NODESTATUS" Type="Edm.String" MaxLength="50"/>
+                <Property Name="NODESHAPE" Type="Edm.String" MaxLength="50"/>
+            </EntityType>
+            <EntityType Name="LINES_VIEW">
+                <Property Name="LINEFROM" Type="Edm.String" MaxLength="50"/>
+                <Property Name="LINETO" Type="Edm.String" MaxLength="50"/>
+                <Property Name="LINESTATUS" Type="Edm.String" MaxLength="50"/>
+                <Property Name="LINETYPE" Type="Edm.String" MaxLength="50"/>
+            </EntityType>
+            <Annotations Target="GraphService.NODES_VIEW/NODEKEY">
+                <Annotation Term="Common.Label" String="NODEKEY"/>
+            </Annotations>
+            <Annotations Target="GraphService.NODES_VIEW/NODETITLE">
+                <Annotation Term="Common.Label" String="NODETITLE"/>
+            </Annotations>
+            <Annotations Target="GraphService.NODES_VIEW/NODESTATUS">
+                <Annotation Term="Common.Label" String="NODESTATUS"/>
+            </Annotations>
+            <Annotations Target="GraphService.NODES_VIEW/NODESHAPE">
+                <Annotation Term="Common.Label" String="NODESHAPE"/>
+            </Annotations>
+            <Annotations Target="GraphService.LINES_VIEW/LINEFROM">
+                <Annotation Term="Common.Label" String="LINEFROM"/>
+            </Annotations>
+            <Annotations Target="GraphService.LINES_VIEW/LINETO">
+                <Annotation Term="Common.Label" String="LINETO"/>
+            </Annotations>
+            <Annotations Target="GraphService.LINES_VIEW/LINESTATUS">
+                <Annotation Term="Common.Label" String="LINESTATUS"/>
+            </Annotations>
+            <Annotations Target="GraphService.LINES_VIEW/LINETYPE">
+                <Annotation Term="Common.Label" String="LINETYPE"/>
+            </Annotations>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

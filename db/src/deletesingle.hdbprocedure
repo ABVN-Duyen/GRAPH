@@ -1,0 +1,25 @@
+PROCEDURE "deletesingle"(in clientkey NVARCHAR(50))
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   --DEFAULT SCHEMA <default_schema_name>
+   AS
+BEGIN
+   /*************************************
+       Write your procedure logic
+   *************************************/
+   -- delete from db_nodes_view where ( NODEKEY = :nodesrc and CLIENT = :clientkey);
+   -- delete from db_nodes_view where ( NODEKEY = :nodedes and CLIENT = :clientkey);
+   -- delete from db_nodes_view where ( NODEKEY = :indsrc and CLIENT = :clientkey);
+   -- delete from db_nodes_view where ( NODEKEY = :inddes and CLIENT = :clientkey);
+   -- delete from db_lines_view where ( LINEFROM = :nodesrc and LINETO = :nodedes and CLIENT = :clientkey );
+   -- delete from db_group_view where ( GROUPKEY = :nodesrc and CLIENT = :clientkey);
+   -- delete from db_group_view where ( GROUPKEY = :nodedes and CLIENT = :clientkey);
+   -- delete from db_input_view where ( SOURCE = :nodesrc and INDSOURCE = :indsrc and DESTINATION = :nodedes and
+   --                                   INDDES = :inddes and CLIENT = :clientkey);
+
+   delete from db_nodes_view where CLIENT = :clientkey;
+   delete from db_lines_view where CLIENT = :clientkey;
+   delete from db_group_view where CLIENT = :clientkey;
+   delete from db_input_view where CLIENT = :clientkey;
+   delete from db_final where CLIENT = :clientkey;
+END

@@ -1,0 +1,302 @@
+<mvc:View controllerName="project1.controller.NetworkGraph"
+    xmlns="sap.suite.ui.commons.networkgraph" 
+    xmlns:table="sap.ui.table"
+	xmlns:stable="sap.ui.comp.smarttable"
+    xmlns:mvc="sap.ui.core.mvc"
+	xmlns:l="sap.ui.layout"
+	xmlns:u="sap.ui.unified"
+	xmlns:core="sap.ui.core"
+	xmlns:layout="sap.suite.ui.commons.networkgraph.layout"
+	xmlns:m="sap.m"
+	height="100%">
+
+	<l:FixFlex id="_IDGenFixFlex1" vertical="true">
+	 
+		<!-- <l:fixContent>
+			<m:OverflowToolbar id="_IDGenOverflowToolbar1">
+				<m:content>
+					<m:Select id="orientation" tooltip="Orientation" selectedKey="{settings>/orientation}">
+						<core:Item id="_IDGenItem100" key="LeftRight" text="Left-Right"/>
+						<core:Item id="_IDGenItem2" key="RightLeft" text="Right-Left"/>
+						<core:Item id="_IDGenItem3" key="TopBottom" text="Top-Bottom"/>
+					</m:Select>
+					<m:Select id="nodePlacement" tooltip="Node placement" selectedKey="{settings>/nodePlacement}">
+						<core:Item id="_IDGenItem4" key="BrandesKoepf" text="Brandes-Koepf"/>
+						<core:Item id="_IDGenItem5" key="LinearSegments" text="Linear Segments"/>
+						<core:Item id="_IDGenItem6" key="Simple" text="Simple"/>
+					</m:Select>
+					<m:Select id="arrowPosition" tooltip="Arrow position" selectedKey="{settings>/arrowPosition}">
+						<core:Item id="_IDGenItem7" key="Start" text="Arrow Start"/>
+						<core:Item id="_IDGenItem8" key="Middle" text="Arrow Middle"/>
+						<core:Item id="_IDGenItem9" key="End" text="Arrow End"/>
+					</m:Select>
+					<m:Select id="arrowOrientation" tooltip="Arrow orientation"
+							  selectedKey="{settings>/arrowOrientation}">
+						<core:Item id="_IDGenItem10" key="ParentOf" text="Parent -> Child"/>
+						<core:Item id="_IDGenItem11" key="ChildOf" text="Child -> Parent"/>
+						<core:Item id="_IDGenItem12" key="None" text="Hidden"/>
+						<core:Item id="_IDGenItem13" key="Both" text="Both"/>
+					</m:Select>
+					<m:Select id="mergeEdges" tooltip="Merge Edges" change="mergeChanged" selectedKey="0">
+						<core:Item id="_IDGenItem14" key="0" text="Split edges"/>
+						<core:Item id="_IDGenItem15" key="1" text="Merged edges"/>
+					</m:Select>
+					<m:Select id="nodeSpacing" tooltip="Node Spacing" selectedKey="55" change="spacingChanged">
+						<core:Item id="_IDGenItem16" key="20" text="Node spacing (20)"/>
+						<core:Item id="_IDGenItem17" key="40" text="Node spacing (40)"/>
+						<core:Item id="_IDGenItem18" key="55" text="Node spacing (55)"/>
+						<core:Item id="_IDGenItem19" key="80" text="Node spacing (80)"/>
+						<core:Item id="_IDGenItem20" key="100" text="Node spacing (100)"/>
+					</m:Select>
+				</m:content>
+			</m:OverflowToolbar>
+		</l:fixContent> --> 
+
+		<l:flexContent>
+			<m:TabContainer id='TabContainer' visible='true' itemClose="itemCloseHandler" itemSelect="itemSelect">
+					<m:items>
+						<m:TabContainerItem name="GRAPH"  id="tabitem1">
+							<m:content>
+								<m:FlexBox fitContainer="true" renderType="Bare" wrap="Wrap" id="graphWrapper">
+									<m:items>
+										<Graph
+												enableWheelZoom="false"
+												orientation="{settings>/orientation}"
+												nodes="{/nodes}"
+												lines="{/lines}"
+												groups="{/groups}"
+												id="graph"
+												search="search"
+												height="70%"
+												selectionChange = "selectChange"
+												afterLayouting="afterLayouting">
+											<statuses>
+												<Status id="_IDGenStatus1" key="AttributeLabel" contentColor="green"/>
+												<Status id="_IDGenStatus2" key="Dashed" borderWidth="2px" borderStyle="dashed"/>
+												<Status id="_IDGenStatus3" key="LineBorderStatus" title="Line border status" borderColor="red" backgroundColor="red" borderWidth="2px"
+														borderStyle="3,3"/>
+												<Status id="_IDGenStatus10" key="ReleventIndicator" title="Relevent Indicator" borderColor="red" backgroundColor="red" borderWidth="2px"/>
+												<Status id="_IDGenStatus11" key="ReleventNode" title="Relevent Source-Destination" borderColor="red" backgroundColor="red" borderWidth="2px"/>
+												<Status id="_IDGenStatus4" key="GroupCustomStatus" title="Group custom status" contentColor="white" backgroundColor="darkblue" borderColor="darkblue" />
+												<Status id="_IDGenStatus5" key="Src_DesNode" title="Source/Destination Node" borderColor="white" backgroundColor="#2F6497" />
+												<Status id="_IDGenStatus6" key="IndNode" title="Indicator Node" borderColor="white" backgroundColor="white" headerContentColor="black" />
+												<Status id="_IDGenStatus7" key="Group1" title="Area Group 1" borderColor="#f5b04d" backgroundColor="#f5b04d" />
+												<Status id="_IDGenStatus8" key="Group2" title="Area Group 2" borderColor="white" backgroundColor="white" headerContentColor="white" contentColor="white"/>
+												<Status id="_IDGenStatus9" key="customLine" title="custom" borderColor="#6C8893" backgroundColor="#6C8893" />
+												<Status id="_IDGenStatus12" key="customLineIndicator" title="custom" borderColor="#6C8893" backgroundColor="#6C8893"/>
+												<Status id="_IDGenStatus13" key="DemonReleInd" title="Demonstated Relevent Indicator" borderColor="#333333" backgroundColor="#333333" borderWidth="2px"/>
+												<Status id="_IDGenStatus14" key="DemonReleNode" title="Demonstated Relevent Node" borderColor="#759421" backgroundColor="#759421" borderWidth="2px"/>
+												<Status id="_IDGenStatus15" key="NDemonReleNode" title="Not Demonstated Relevent Node" borderColor="#BFBFBF" backgroundColor="#BFBFBF" borderWidth="2px"/>
+												<Status id="_IDGenStatus16" key="NDemonReleInd" title="Not Demonstated Relevent Indicator" borderColor="#91C8F6" backgroundColor="#91C8F6" borderWidth="2px"/>
+											</statuses>
+											<layoutData>
+												<m:FlexItemData id="_IDGenFlexItemData1" growFactor="1" shrinkFactor="1" baseSize="0%" minWidth="300px"/>
+											</layoutData>
+											<layoutAlgorithm>
+												<layout:LayeredLayout id="_IDGenLayeredLayout1"
+														mergeEdges="{settings>/mergeEdges}"
+														nodePlacement="{settings>/nodePlacement}"
+														nodeSpacing="{settings>/nodeSpacing}"/>
+											</layoutAlgorithm>
+											<nodes>
+												<Node id="_IDGenNode1" 
+													headerCheckBoxState="{headerCheckBoxState}"
+													key="{key}"
+													icon="{icon}"
+													title='{title}'
+													group="{group}"
+													shape="{shape}"
+													titleLineSize="1"
+													status="{status}"
+													press = "pressNode"
+													>
+												<customData>
+														<core:CustomData key="bold" value="{status}" writeToDom="true" />
+													</customData>
+												</Node>
+											</nodes>
+											<lines>
+												<Line id="_IDGenLine1" arrowPosition="{settings>/arrowPosition}"
+													arrowOrientation="{settings>/arrowOrientation}"
+													press="pressLine"
+													from="{SOURCE}"
+													to="{DESTINATION}"
+													status="{status}"
+													lineType="{lineType}">
+												</Line>
+											</lines>
+											<groups>
+												<Group id="_IDGenGroup1" key="{key}"
+													headerCheckBoxState="{headerCheckboxState}"
+													title="{title}"
+													status="{status}">
+												</Group>
+											</groups>
+										</Graph>
+										<GraphMap id="map" graph="graph" visible="false">
+											<layoutData>
+												<m:FlexItemData id="_IDGenFlexItemData2" minWidth="200px" maxWidth="25%"/>
+											</layoutData> 
+										</GraphMap>
+									</m:items>
+			
+									<m:ScrollContainer id="_IDGenScrollContainer1" vertical="true" focusable="true" height="50%">
+										<m:Table id="ins" items="{/input}" sticky="ColumnHeaders,HeaderToolbar" growing="true">
+											<m:headerToolbar>
+												<m:Toolbar id="_IDGenToolbar1">
+													<m:Button id="_IDGenButton1" icon="sap-icon://add" text="Row" press="addRow" />
+													<m:Button id="_IDGenButton2" icon="sap-icon://delete" text="Delete all" press="thanos"/>
+													<m:Button id="_IDGenButton3" icon="sap-icon://journey-change" text="Analysis" press="merge"/>
+													<m:Button id="_IDGenButton5" icon="sap-icon://upload-to-cloud" text="Upload DB" press="uploadWithWait"/>
+													<u:FileUploader
+													id="fileUploader"
+													name="myFileUpload"
+													uploadUrl="upload/"
+													buttonOnly="false"
+													tooltip="Upload your file to the local server"
+													placeholder="Upload Hypothesis as CSV File"
+													change="onChange"
+													fileType="CSV,XLSX,XLS"
+													sameFilenameAllowed="true"
+													uploadComplete="handleUploadComplete"/>
+
+													<!-- <m:Input
+														id="clientInput"
+														placeholder="Client name"
+														showSuggestion="true"
+														showValueHelp="true"
+														submit="getInputF4"
+														width="150px"
+														valueHelpRequest=".onValueHelpRequest"
+														suggestionItems="{/client}" >
+														<m:suggestionItems>
+															<core:Item id="_IDGenItem1" text="{CLIENTKEY}" />
+														</m:suggestionItems>
+													</m:Input> -->
+													<m:Input
+														id="clientInput"
+														placeholder="Client name"
+														showSuggestion="true"
+														showValueHelp="true"
+														submit="getInputF4"
+														width="150px"
+														valueHelpRequest=".onValueHelpRequest"
+														suggestionItems="{/client}" >
+														<m:suggestionItems>
+															<core:Item id="_IDGenItem1" text="{CLIENTKEY}" />
+														</m:suggestionItems>
+													</m:Input>
+													
+													<m:Button id="_IDGenButton7" icon="sap-icon://clear-all" text="Delete Client" press="delClient"/>
+													<m:Button id="_IDGenButton6" icon="sap-icon://refresh" text="Refresh" press="refresh"/>
+													<m:Button id="_IDGenButton8" icon="sap-icon://download" text="Download Hypothesis" press="downloadHypothesis"/>
+													<m:Button id="_IDGenButton9" icon="sap-icon://download" text="Download Final" press="downloadFinal"/>
+													<m:Button id="_IDGenButton10" icon="sap-icon://detail-view" text="Display Final" press="displayFinal"/>
+
+													<u:FileUploader
+													id="fileUploader_1"
+													name="myFileUpload_1"
+													uploadUrl="upload/"
+													buttonOnly="false"
+													
+													tooltip="Upload your file to the local server"
+													placeholder="Upload Final as CSV file"
+													change="onChange_"
+													fileType="CSV,XLSX,XLS"
+													sameFilenameAllowed="true"
+													uploadComplete="handleUploadComplete_"/>
+												</m:Toolbar>
+											</m:headerToolbar>
+											
+											<m:columns>
+												<m:Column id="_IDGenColumn1" width="50px"/>
+
+												<m:Column id="_IDGenColumn7"
+													minScreenWidth="Tablet"
+													demandPopin="true">
+													<m:Text id="_IDGenText6" text="Source Area" />
+												</m:Column>
+
+												<m:Column id="_IDGenColumn2"
+													minScreenWidth="Tablet"
+													demandPopin="true">
+													<m:Text id="_IDGenText1" text="Source" />
+												</m:Column>
+
+												<m:Column id="_IDGenColumn3"
+													minScreenWidth="Tablet"
+													demandPopin="true">
+													<m:Text id="_IDGenText2" text="Indicator of Source" />
+												</m:Column>
+
+												<m:Column id="_IDGenColumn8"
+													minScreenWidth="Tablet"
+													demandPopin="true">
+													<m:Text id="_IDGenText7" text="Destination Area" />
+												</m:Column>
+
+												<m:Column id="_IDGenColumn4"
+													minScreenWidth="Tablet"
+													demandPopin="true">
+													<m:Text id="_IDGenText3" text="Destination" />
+												</m:Column>
+
+												<m:Column id="_IDGenColumn5"
+													minScreenWidth="Tablet"
+													demandPopin="true">
+													<m:Text id="_IDGenText4" text="Indicator of Destination" />
+												</m:Column>
+
+												<m:Column id="_IDGenColumn6"
+													minScreenWidth="Tablet"
+													demandPopin="true">
+													<m:Text id="_IDGenText5" text="Relationship" />
+												</m:Column>
+											</m:columns>
+											<m:items>
+												<m:ColumnListItem id="_IDGenColumnListItem1">
+												<m:cells>
+													<m:Button id="_IDGenButton4" icon="sap-icon://delete" press="deleteRow" type="Reject"/>
+													<m:Input id="_IDGenComboBox1" value="{AREA}" submit = "inputFromChange"/> 
+													<m:Input id="_IDGenInput1" value="{SOURCE}" submit = "inputFromChange" required="true"/>
+													<m:Input id="_IDGenInput2" value="{INDSOURCE}" submit = "inputFromChange" required="true"/>
+													<m:Input id="_IDGenComboBox2" value="{DESAREA}" submit = "inputFromChange"/> 
+													<m:Input id="_IDGenInput3" value="{DESTINATION}" submit = "inputFromChange" required="true"/>
+													<m:Input id="_IDGenInput4" value="{INDDEST}" submit = "inputFromChange" required="true"/>
+													<m:Input id="_IDGenInput5" value="{RELATIONSHIP}" submit = "inputFromChange" enabled="{editable}"  />
+											
+												</m:cells>
+											</m:ColumnListItem>
+											</m:items>
+										</m:Table>
+										</m:ScrollContainer>
+									</m:FlexBox>
+							</m:content>
+						</m:TabContainerItem>
+						<m:TabContainerItem name="Checkbox"  id="tabitem2">
+							<m:content>
+								<m:VBox id="_IDGenVBox1">
+									<m:CheckBox id="ID_Green" text="Green: Line that connects boxes with demonstrated relevance" selected="true" enabled="true" />
+									<m:CheckBox id="ID_Grey" text="Grey : Line that connects boxes that have not been demonstrated to be related" selected="true" enabled="true" />
+									<m:CheckBox id="ID_Black" text="Black: Line that connects indicators with demonstrated relevance" selected="true" enabled="true"/>
+									<m:CheckBox id="ID_Blue" text="Blue : Line that connects metrics that have not been demonstrated to be related" selected="true" enabled="true" />
+									<!-- <m:CheckBox id="_IDGenCheckBox5" text="Option e" enabled="false" />
+									<m:CheckBox id="_IDGenCheckBox6" text="Option partially selected" selected="true" partiallySelected="true" />
+									<m:CheckBox id="_IDGenCheckBox7" text="Warning" valueState="Warning" />
+									<m:CheckBox id="_IDGenCheckBox8" text="Warning disabled" valueState="Warning" enabled="false" selected="true" />
+									<m:CheckBox id="_IDGenCheckBox9" text="Error" valueState="Error" />
+									<m:CheckBox id="_IDGenCheckBox10" text="Error disabled" valueState="Error" enabled="false" selected="true" />
+									<m:CheckBox id="_IDGenCheckBox11" text="Information" valueState="Information" />
+									<m:CheckBox id="_IDGenCheckBox12" text="Information disabled" valueState="Information" enabled="false" selected="true" />
+									<m:CheckBox id="_IDGenCheckBox13" text="Checkbox with wrapping='true' and long text" wrapping="true" width="150px"/> -->
+								</m:VBox>
+							</m:content>
+						</m:TabContainerItem>
+						</m:items>
+        			</m:TabContainer>  
+			
+			
+		</l:flexContent>
+	</l:FixFlex>
+    
+</mvc:View>
